@@ -1,30 +1,13 @@
-import { Markup } from "telegraf";
+import { InlineKeyboard } from "grammy";
 
-const GRADES = [
-    "Grade 1-4",
-    "Grade 5-8",
-    "Grade 9-10",
-    "Grade 11-12"
-];
+const GRADES = ["Grade 1-4", "Grade 5-8", "Grade 9-10", "Grade 11-12"];
 
 export function gradeKeyboard(selected = []) {
-
-    const buttons = GRADES.map(grade => [
-
-        Markup.button.callback(
-
-            `${selected.includes(grade) ? "✅" : "⬜"} ${grade}`,
-
-            `grade:${grade}`
-
-        )
-
-    ]);
-
-    buttons.push([
-        Markup.button.callback("✅ Done", "grade_done")
-    ]);
-
-    return Markup.inlineKeyboard(buttons);
-
+  const kb = new InlineKeyboard();
+  for (const grade of GRADES) {
+    const checked = selected.includes(grade);
+    kb.text(`${checked ? "✅" : "⬜"} ${grade}`, `grade:${grade}`).row();
+  }
+  kb.text("✅ Done", "grade_done");
+  return kb;
 }

@@ -1,26 +1,18 @@
+import { Bot, session } from "grammy";
+import { conversations, createConversation } from "@grammyjs/conversations";
 import dotenv from "dotenv";
-import { session, Telegraf  } from "telegraf";
-import { Scenes } from "telegraf";
-import registerScene from "./scenes/registerScene.js";
-import parentRegisterScene from "./scenes/parentRegisterScene.js";
-import tutorBasicScene from "./scenes/tutorBasicScene.js";
-import tutorProfessionalScene from "./scenes/tutorProfessionalScene.js";
-import tutorDocumentScene from "./scenes/tutorDocumentScene.js";
-
 dotenv.config();
 
-const bot = new Telegraf(process.env.BOT_TOKEN);
+import { tutorRegisterConversation, completeProfileConversation } from "./scenes/tutorRegisterScene.js";
+import { parentRegisterConversation } from "./scenes/parentRegisterScene.js";
 
-const stage = new Scenes.Stage([
-  // registerScene,
-  parentRegisterScene,
-  tutorBasicScene,
-  tutorProfessionalScene,
-  tutorDocumentScene,
-]);
+const bot = new Bot(process.env.BOT_TOKEN);
 
-bot.use(session());
-bot.use(stage.middleware());
+bot.use(session({ initial: () => ({}) }));
 
+bot.use(conversations());
+bot.use(createConversation(tutorRegisterConversation));
+bot.use(createConversation(completeProfileConversation));
+bot.use(createConversation(parentRegisterConversation));
 
 export default bot;

@@ -1,9 +1,6 @@
 export default function registerCommand(bot) {
-
-    bot.command("register", (ctx) => {
-
-        ctx.scene.enter("register-scene");
-
-    });
-
+  bot.command("register", async (ctx) => {
+    await ctx.conversation.enter("tutorRegisterConversation");
+    // await ctx.conversation.enter("tutorBasicConversation");
+  });
 }

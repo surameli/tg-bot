@@ -1,10 +1,9 @@
-import { Markup } from "telegraf";
+import { Keyboard } from "grammy";
 
-export const educationKeyboard = Markup.keyboard([
-    ["Diploma"],
-    ["Bachelor"],
-    ["Master"],
-    ["PhD"]
-])
-.resize()
-.oneTime();
+export const educationKeyboard = new Keyboard()
+  .text("Diploma").row()
+  .text("Bachelor").row()
+  .text("Master").row()
+  .text("PhD")
+  .resized()
+  .oneTime();

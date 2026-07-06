@@ -1,34 +1,33 @@
 import dotenv from "dotenv";
-import bot from "./bot.js";
+dotenv.config();
 
-import registerStartCommand from "./src/commands/start.js";
-import registerHelpCommand from "./src/commands/help.js";
-import registerCommand from "./src/commands/register.js";
-import registerCancelCommand from "./src/commands/cancel.js";
-import registerMenuHandler from "./src/handlers/menuHandler.js";
+import bot from "./bot.js";
 import { connectDB } from "./src/database/db.js";
 
-dotenv.config();
+import registerStartCommand          from "./src/commands/start.js";
+import registerHelpCommand           from "./src/commands/help.js";
+import registerCommand               from "./src/commands/register.js";
+import registerCancelCommand         from "./src/commands/cancel.js";
+import registerCompleteProfileCommand from "./src/commands/completeProfile.js";
+import registerProfileCommand         from "./src/commands/profile.js";
+import registerMenuHandler           from "./src/handlers/menuHandler.js";
 
 async function startBot() {
   await connectDB();
 
-  // Register handlers
   registerMenuHandler(bot);
-
-  // Register commands
   registerStartCommand(bot);
   registerHelpCommand(bot);
   registerCommand(bot);
   registerCancelCommand(bot);
+  registerCompleteProfileCommand(bot);
+  registerProfileCommand(bot);
 
-  // Launch the bot
-  await bot.launch();
-
-  console.log("🤖 Tutor Bot is running...");
+  console.log("🤖 Fidel Tutor Bot is running...");
+  await bot.start();
 }
 
 startBot();
 
-process.once("SIGINT", () => bot.stop("SIGINT"));
-process.once("SIGTERM", () => bot.stop("SIGTERM"));
+process.once("SIGINT",  () => bot.stop());
+process.once("SIGTERM", () => bot.stop());

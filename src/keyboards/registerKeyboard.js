@@ -1,7 +1,6 @@
-import { Markup } from "telegraf";
+import { Keyboard } from "grammy";
 
-export const genderKeyboard = Markup.keyboard([
-    ["Male", "Female"]
-])
-.resize()
-.oneTime();
+export const genderKeyboard = new Keyboard()
+  .text("Male").text("Female")
+  .resized()
+  .oneTime();

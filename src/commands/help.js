@@ -1,6 +1,5 @@
 export default function registerHelpCommand(bot) {
-
-  bot.help(async (ctx) => {
+  bot.command("help", async (ctx) => {
     await ctx.reply(
       `*Available Commands*\n\n` +
       `/start    — 🏠 Go to main menu\n` +
@@ -10,5 +9,4 @@ export default function registerHelpCommand(bot) {
       { parse_mode: "Markdown" }
     );
   });
-
 }
